@@ -1,0 +1,93 @@
+
+https://www.javainuse.com/devOps/docker
+https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04
+https://docs.docker.com/install/linux/linux-postinstall/
+
+###################################
+# Docker Image
+###################################
+
+# Build the image
+docker image build -t <<IMAGE_NAME>> .
+
+###################################
+# Docker Container
+###################################
+
+# Create the container
+docker container run --name <<CONTAINER_NAME>> -p 8080:8080 -d <<IMAGE_NAME>>
+
+# Check the logs
+docker container logs <<CONTAINER_NAME>>
+
+# Access the container files
+docker container exec -it <<CONTAINER_NAME>> /bin/sh
+
+# Stop the container
+docker container stop <<CONTAINER_NAME>>
+
+# List the containers
+docker container ls
+
+# Remove the container
+docker container rm <<CONTAINER_NAME>>
+
+###################################
+# Docker Networks
+###################################
+
+# List the networks
+docker network ls
+
+# Create the network
+docker network create <<NETWORK_NAME>>
+
+# Create container inside the network
+docker container run --network <<NETWORK_NAME>> --name <<CONTAINER_NAME>> -p 8080:8080 -d <<IMAGE_NAME>>
+
+###################################
+# Docker Compose
+###################################
+
+# Install docker-compose
+sudo apt install docker-compose
+
+# Sample yml file content
+version: "3"
+services:
+  consumer:
+    image: employee-consumer
+    networks:
+      - consumer-producer
+    depends_on:
+      - producer
+      
+  producer:
+    image: employee-producer
+    ports:
+      - "8080:8080"
+    networks:
+      - consumer-producer
+      
+networks:
+  consumer-producer:
+
+# Start the docker compose
+docker-compose up
+
+
+###################################
+# Docker MySql
+###################################
+
+# MySql container initialization
+docker container run --name mysqldb --network employee-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=bootdb -d mysql:8
+
+# Execute MySql in interactive mode
+docker container exec -it mysqldb  bash
+
+# CURL command to insert data
+curl --header "Content-Type: application/json"   --request POST   --data '{"empId":"emp001","empName":"emp001"}'   http://localhost:8080/insertemployee
+
+
+
