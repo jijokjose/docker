@@ -1,0 +1,16 @@
+Git files commit steps
+----------------------
+
+1. Create a repository in GitHub
+
+2. Open the local machine folder and initialize
+
+    git init
+    
+3. Push the files into the repository
+
+    git add .
+    git status
+    git commit -m "Add existing file"
+    git remote add origin https://github.com/jijokjose/docker.git
+    git push -u origin master
